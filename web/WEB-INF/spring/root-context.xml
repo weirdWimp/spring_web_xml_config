@@ -4,19 +4,25 @@
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:component-scan base-package="com.learn.something.repository"/>
+
+    <util:properties id="hibernateProperties">
+        <prop key="dialect">“”“”“”“”org.hibernate.dialect.H2Dialect</prop>
+    </util:properties>
 
     <beans profile="dev">
         <jdbc:embedded-database id="dataSource" type="H2">
             <jdbc:script
-                    location="file:///D:/workspace/idea/java_workspace/spring_web_xml_config/web/WEB-INF/h2SqlScript/schema.sql"/>
+                    location="file:///F:/DevelopmentKit/idea-workspace/java-workspace/spring_web_xml_config/web/WEB-INF/h2SqlScript/schema.sql"/>
             <jdbc:script
-                    location="file:///D:/workspace/idea/java_workspace/spring_web_xml_config/web/WEB-INF/h2SqlScript/insert.sql"/>
+                    location="file:///F:/DevelopmentKit/idea-workspace/java-workspace/spring_web_xml_config/web/WEB-INF/h2SqlScript/insert.sql"/>
         </jdbc:embedded-database>
     </beans>
 
@@ -31,6 +37,13 @@
     <beans>
         <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
               c:dataSource-ref="dataSource"/>
+
+        <bean id="sessionFactoryBean" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+              p:dataSource-ref="dataSource"
+              p:packagesToScan="com.learn.something.entity"
+              p:hibernateProperties-ref="hibernateProperties"/>
+
+        <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     </beans>
 
 </beans>

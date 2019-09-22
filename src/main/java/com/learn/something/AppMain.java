@@ -15,14 +15,15 @@ public class AppMain {
     public static void contextTest() {
 
         FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext();
-        context.setConfigLocation("D:\\workspace\\idea\\java_workspace\\spring_web_xml_config\\web\\WEB-INF\\spring\\root-context.xml");
+        context.setConfigLocation("F:\\DevelopmentKit\\idea-workspace\\java-workspace\\spring_web_xml_config\\web\\WEB-INF\\spring\\root-context.xml");
         context.refresh();
 
         CityRepository repository = context.getBean(CityRepository.class);
         City qandaharCity = repository.findCityByName("Qandahar");
         System.out.println("qandaharCity = " + qandaharCity);
 
-
+        City city = repository.findCityById(1);
+        System.out.println("city = " + city);
     }
 
 }

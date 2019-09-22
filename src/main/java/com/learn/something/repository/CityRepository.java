@@ -6,4 +6,6 @@ public interface CityRepository {
 
     City findCityByName(String name);
 
+    City findCityById(int id);
+
 }
